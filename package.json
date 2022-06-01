@@ -1,5 +1,5 @@
 {
-	"name": "web-scaper",
+	"name": "webl-scraper",
 	"version": "1.0.0",
 	"description": "Simple and fast web scraper.",
 	"main": "./dist/index.js",
@@ -14,7 +14,7 @@
 	"license": "MIT",
 	"repository": {
     "type": "git",
-    "url": "https://github.com/andreagennaioli/web-scaper.git"
+    "url": "https://github.com/andreagennaioli/webl-scraper.git"
   },
 	"devDependencies": {
 		"typescript": "^4.7.2"
