@@ -1,17 +1,17 @@
 const { Selector, Scraper } = require("../dist");
 
-const scraper = new Scraper("https://www.codingperstudenti.tk/", [
+const scraper = new Scraper("https://en.wikipedia.org/wiki/Rome", [
 	new Selector(
-		"p.mt-2.text-black.text-4xl.font-semibold",
+		"h2 > span.mw-headline",
 		"__innerHTML"
 	),
 	new Selector(
-		"link",
-		"href"
+		"h3 > span.mw-headline",
+		"__innerHTML"
 	),
 	new Selector(
-		"p.mt-2.text-black.text-4xl.font-semibold",
-		"class"
+		"a",
+		"href"
 	),
 ]);
 
