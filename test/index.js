@@ -13,10 +13,10 @@ const scraper = new Scraper("https://en.wikipedia.org/wiki/Rome",
     /* This selector gets the 'innerHTML' propriety of the selected elements */
     new Selector(
       "h2 > span.mw-headline",
-      "__innerHTML" // Using HTML element properties
+      "__innerHTML" // Using HTML element properties preceded by two _
     ),
     new Selector(
-      "h3 > span.mw-headline",
+      "li > a > span.toctext",
       "__innerHTML"
     ),
   ]
