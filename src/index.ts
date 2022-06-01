@@ -1,58 +1,85 @@
 import { JSDOM } from "jsdom";
 import axios from "axios";
 
-interface ISelectorScraped {
+/** Interface representing a selector that has been scraped */
+interface SelectorScraped {
 	selector: string;
 	attr: string;
 	values: string[];
 }
 
+/** Class representing a new selector */
 class Selector {
 	selector: string = "";
 	attr: string = "";
+	/**
+	 * Create a new selector
+	 * @param {string} selector - The CSS selector
+	 * @param {string} attr - The attribute whose value you want
+	 */
 	constructor(selector: string, attr: string) {
 		this.selector = selector;
-		if (attr) this.attr = attr;
+		this.attr = attr;
 	}
 }
 
+/** Class representing a new scraper */
 class Scraper {
 	url: string = "";
 	selectors: Selector[] = [];
+	/**
+	 * Create a new web scraper
+	 * @param {string} url - The URL of the page to scrape
+	 * @param {Selector[]} selectors - Array of selectors
+	 */
 	constructor(url: string, selectors: Selector[]) {
 		this.url = url;
 		this.selectors = selectors;
 	}
 
-	async scrape(): Promise<ISelectorScraped[]> {
-		return new Promise<ISelectorScraped[]>(async (resolve, reject) => {
-			const res = await axios.get(this.url);
-			const html = res.data;
+	/**
+	 * Starts the scraping. Returns an array of scraped selectors
+	 * @returns {Promise<SelectorScraped[]>}
+	 */
+	async scrape(): Promise<SelectorScraped[]> {
+		return new Promise<SelectorScraped[]>(async (resolve, reject) => {
+			/* Let's put all inside a try/catch block 😎 */
+			try {
+				/* Getting the HTML code of the page */
+				const res = await axios.get(this.url);
+				const html = res.data;
 
-			const dom = new JSDOM(html);
+				/* Creating a DOM */
+				const dom = new JSDOM(html);
 
-			const scrapedSelectors: ISelectorScraped[] = [];
+				const scrapedSelectors: SelectorScraped[] = [];
 
-			for (const selector of this.selectors) {
-				const els = dom.window.document.querySelectorAll(selector.selector);
-				const scraped: ISelectorScraped = {
-					selector: selector.selector,
-					attr: selector.attr,
-					values: [],
-				};
-				if (selector.attr.startsWith("__")) {
-					for (const el of els) {
-						scraped.values.push(el[selector.attr.slice(2)]);
+				/* Loop each selector */
+				for (const selector of this.selectors) {
+					/* Selecting elements from the DOM */
+					const els = dom.window.document.querySelectorAll(selector.selector);
+					/* Creating the Scraped object */
+					const scraped: SelectorScraped = {
+						selector: selector.selector,
+						attr: selector.attr,
+						values: [],
+					};
+					if (selector.attr.startsWith("__")) {
+						for (const el of els) {
+							scraped.values.push(el[selector.attr.slice(2)]);
+						}
+					} else {
+						for (const el of els) {
+							scraped.values.push(el.getAttribute(selector.attr));
+						}
 					}
-				} else {
-					for (const el of els) {
-						scraped.values.push(el.getAttribute(selector.attr));
-					}
+					scrapedSelectors.push(scraped);
 				}
-				scrapedSelectors.push(scraped);
-			}
 
-			resolve(scrapedSelectors);
+				resolve(scrapedSelectors);
+			} catch (e) {
+				reject(e);
+			}
 		});
 	}
 }
