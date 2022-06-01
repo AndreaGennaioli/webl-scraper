@@ -2,7 +2,7 @@
 A fast and easy-to-use package for manipulating online page content.
 ## Install
 Install our package using `npm`:
-```cmd
+```console
 npm install webl-scraper
 ```
 ## How To Use
