@@ -9,7 +9,7 @@ npm install webl-scraper
 Code example:
 ```js
 /* Import */
-const { Selector, Scraper } = require("../dist");
+const { Selector, Scraper } = require("webl-scraper");
 
 /* Create the scraper */
 const scraper = new Scraper("https://en.wikipedia.org/wiki/Rome",
