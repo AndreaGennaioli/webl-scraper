@@ -41,6 +41,16 @@ Output:
 ```js
 [
   {
+    selector: 'a',
+    attr: 'href',
+    values: [
+      '/wiki/Latium',
+      '/wiki/Tiber',
+      '/wiki/Vatican_City',
+      ...
+    ]
+  },
+  {
     selector: 'h2 > span.mw-headline',
     attr: '__innerHTML',
     values: [
@@ -57,16 +67,6 @@ Output:
       'Earliest history',
       'Monarchy and republic',
       'Empire',
-      ...
-    ]
-  },
-  {
-    selector: 'a',
-    attr: 'href',
-    values: [
-      '/wiki/Latium',
-      '/wiki/Tiber',
-      '/wiki/Vatican_City',
       ...
     ]
   }
